@@ -1,45 +1,26 @@
 package com.example.ravia.weatherapplication.Model;
 
+import java.util.List;
+
 /**
  * Created by ravia on 11/2/2017.
  */
 
 public class WeatherResponse {
-    Coord coord;
-    Weather weather;
+
+
+    List<Weather> weather;
     String base;
-    Main main;
+    MainO main;
     Wind wind;
+    String name;
 
-    public Coord getCoord() {
-        return coord;
-    }
 
-    public void setCoord(Coord coord) {
-        this.coord = coord;
-    }
-
-    public Weather getWeather() {
-        return weather;
-    }
-
-    public void setWeather(Weather weather) {
-        this.weather = weather;
-    }
-
-    public String getBase() {
-        return base;
-    }
-
-    public void setBase(String base) {
-        this.base = base;
-    }
-
-    public Main getMain() {
+    public MainO getMain() {
         return main;
     }
 
-    public void setMain(Main main) {
+    public void setMain(MainO main) {
         this.main = main;
     }
 
@@ -50,4 +31,33 @@ public class WeatherResponse {
     public void setWind(Wind wind) {
         this.wind = wind;
     }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    public List<Weather> getWeather() {
+        return weather;
+    }
+
+    public void setWeather(List<Weather> weather) {
+        this.weather = weather;
+    }
+
+
+    public String getBase() {
+        return base;
+    }
+
+    public void setBase(String base) {
+        this.base = base;
+    }
+
+
 }

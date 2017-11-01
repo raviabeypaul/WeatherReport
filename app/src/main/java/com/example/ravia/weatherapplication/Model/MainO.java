@@ -4,7 +4,7 @@ package com.example.ravia.weatherapplication.Model;
  * Created by ravia on 11/2/2017.
  */
 
-public class Main {
+public class MainO {
     String temp;
     String pressure;
     String humidity;

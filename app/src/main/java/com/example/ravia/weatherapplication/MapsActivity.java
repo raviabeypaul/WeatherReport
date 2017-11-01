@@ -14,7 +14,13 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.ravia.weatherapplication.Model.Coord;
 import com.example.ravia.weatherapplication.Model.GenericModel;
+import com.example.ravia.weatherapplication.Model.GenericModelArr;
+import com.example.ravia.weatherapplication.Model.Weather;
 import com.example.ravia.weatherapplication.Model.WeatherResponse;
 import com.example.ravia.weatherapplication.Utils.CommonUtility;
 import com.example.ravia.weatherapplication.Utils.VolleyResponseListener;
@@ -28,13 +34,19 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import net.aksingh.owmjapis.CurrentWeather;
 import net.aksingh.owmjapis.OpenWeatherMap;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback ,LocationListener, GoogleMap.OnMarkerClickListener {
 
@@ -156,6 +168,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public boolean onMarkerClick(Marker marker) {
 //                Toast.makeText(getApplicationContext(),"hello",Toast.LENGTH_SHORT).show();
                 String url = "http://api.openweathermap.org/data/2.5/" + "weather?" + "lat=" + Double.toString(lat) + "&" + "lon=" + Double.toString(lang) + "&" + "mode=json" + "&" + "units=metric"  + "&" + "appId=" + apikey;
+
+
+
                 cUtils.stringRequest(Request.Method.GET, url, new VolleyResponseListener() {
                     @Override
                     public void onError(String message) {
@@ -165,13 +180,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     @Override
                     public void onResponse(Object response) {
                         Log.e(TAG, "onResponse: " + response );
-                        GenericModel model = new GenericModel();
+                        WeatherResponse  weatherResponse = new WeatherResponse();
                         Gson gson = new Gson();
-                        model = gson.fromJson(response.toString(), GenericModel.class);
-                        JsonObject jsonObject = new Gson().toJsonTree(model.getResponseObject()).getAsJsonObject();
-                        WeatherResponse weatherResponse = new WeatherResponse();
-                        weatherResponse = gson.fromJson(jsonObject.toString(), WeatherResponse.class);
+                        weatherResponse = gson.fromJson(response.toString(),WeatherResponse.class);
+
                         String a = gson.toJson(weatherResponse);
+                        Log.e(TAG, "onResponse: " + a );
                         Intent intent = new Intent(MapsActivity.this,WeatherReport.class);
                         intent.putExtra("weather",a);
                         startActivity(intent);
